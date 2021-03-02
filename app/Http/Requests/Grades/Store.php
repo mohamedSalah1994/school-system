@@ -24,8 +24,8 @@ class Store extends FormRequest
     public function rules()
     {
         return [
-            'Name' => 'required|unique:grades,name->ar,'.$this->id,
-            'Name_en' => 'required|unique:grades,name->en,'.$this->id,
+            'Name' => 'required',
+            'Name_en' => 'required',
         ];
     }
 
@@ -33,9 +33,9 @@ class Store extends FormRequest
     {
         return [
             'Name.required' => trans('validation.required'),
-            'Name.unique' => trans('validation.unique'),
+            // 'Name.unique' => trans('validation.unique'),
             'Name_en.required' => trans('validation.required'),
-            'Name_en.unique' => trans('validation.unique'),
+            // 'Name_en.unique' => trans('validation.unique'),
         ];
     }
 }
