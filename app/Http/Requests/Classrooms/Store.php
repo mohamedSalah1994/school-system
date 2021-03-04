@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Grades;
+namespace App\Http\Requests\Classrooms;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,18 +24,17 @@ class Store extends FormRequest
     public function rules()
     {
         return [
-            'Name' => 'required|unique:Grades,name->ar,'.$this->id,
-            'Name_en' => 'required|unique:Grades,name->en,'.$this->id,
+            'List_Classes.*.Name' => 'required',
+            'List_Classes.*.Name_class_en' => 'required',
         ];
     }
+
 
     public function messages()
     {
         return [
             'Name.required' => trans('validation.required'),
-            'Name.unique' => trans('validation.unique'),
-            'Name_en.required' => trans('validation.required'),
-            'Name_en.unique' => trans('validation.unique'),
+            'Name_class_en.required' => trans('validation.required'),
         ];
     }
 }
