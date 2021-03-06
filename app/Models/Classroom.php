@@ -19,5 +19,6 @@ class Classroom extends Model
     {
         return $this->belongsTo(Grade::class , 'Grade_id');
     }
+    
 
 }

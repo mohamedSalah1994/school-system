@@ -314,7 +314,7 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     {{ trans('My_Classes_trans.Warning_Grade') }}
-                    <input class="text" type="hidden" id="delete_all_id" name="delete_all_id" value=''>
+                    <input class="text" type="text" id="delete_all_id" name="delete_all_id" value=''>
                 </div>
 
                 <div class="modal-footer">
@@ -338,7 +338,26 @@
 @section('js')
 @toastr_js
 @toastr_render
+<script>
+    function CheckAll(className, elem) {
+        var elements = document.getElementsByClassName(className);
+        var l = elements.length;
 
+        if (elem.checked) {
+            document.getElementById("btn_delete_all").style.display = "inline-block";
+
+            for (var i = 0; i < l; i++) {
+                elements[i].checked = true;
+            }
+        } else {
+            document.getElementById("btn_delete_all").style.display = "none";
+
+            for (var i = 0; i < l; i++) {
+                elements[i].checked = false;
+            }
+        }
+    }
+</script>
 <script type="text/javascript">
     $(function() {
         $("#btn_delete_all").click(function() {
@@ -355,6 +374,7 @@
     });
 
 </script>
+
 <script type="text/javascript">
 
         $(".box1").click(function() {
