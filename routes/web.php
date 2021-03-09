@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Grades\GradeController;
 use App\Http\Controllers\Sections\SectionController;
@@ -33,6 +34,8 @@ Route::group(
         'prefix' => LaravelLocalization::setLocale(),
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth' ]
     ], function(){
+         //==============================dashboard============================
+    Route::get('dashboard', [HomeController::class ,'index'])->name('dashboard');
      //==============================Grades============================
     Route::resource('Grades' , GradeController::class);
      //==============================Classrooms============================
@@ -42,6 +45,8 @@ Route::group(
      //==============================Sections============================
      Route::resource('Sections' , SectionController::class);
      Route::get('/classes/{id}' , [SectionController::class , 'getclasses']);
+      //==============================parents============================
+      Route::view('add_parent','livewire.show_Form');
     });
 
 
