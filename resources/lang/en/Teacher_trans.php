@@ -13,4 +13,8 @@ return [
     'Gender'=>'Gender',
     'Joining_Date'=>'Joining_Date',
     'Address'=>'Address',
+    'Delete'=>'Delete',
+    'Close' => 'Close',
+    'Edit' => 'Edit',
+    'Save' => 'Save',
 ];

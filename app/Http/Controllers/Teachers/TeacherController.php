@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teachers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Teachers\Store;
 use App\Repository\TeacherRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -22,36 +23,36 @@ class TeacherController extends Controller
 
     public function create()
     {
-        //
+        $specializations = $this->teacher->Getspecialization();
+        $genders = $this->teacher->GetGender();
+        return view('pages.Teachers.create',compact('specializations','genders'));
+        // return $this->teachers->createTeachers();
     }
 
 
-    public function store(Request $request)
+    public function store(Store $request)
     {
-        //
-    }
-
-
-    public function show($id)
-    {
-        //
+        return $this->teacher->StoreTeachers($request);
     }
 
 
     public function edit($id)
     {
-        //
+        $Teachers = $this->teacher->editTeachers($id);
+        $specializations = $this->teacher->Getspecialization();
+        $genders = $this->teacher->GetGender();
+        return view('pages.Teachers.edit',compact('Teachers','specializations','genders'));
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Store $request)
     {
-        //
+        return $this->teacher->UpdateTeachers($request);
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        return $this->teacher->DeleteTeachers($request);
     }
 }
