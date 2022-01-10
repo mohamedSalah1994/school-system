@@ -13,9 +13,5 @@ return [
     'Gender'=>'النوع',
     'Joining_Date'=>'تاريخ التعين',
     'Address'=>'العنوان',
-    'Delete'=>'حذف',
-    'Close' => 'اغلاق',
-    'Edit' => 'تعديل',
-    'Save' => 'حفظ',
 
 ];
