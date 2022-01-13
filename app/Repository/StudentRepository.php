@@ -6,6 +6,7 @@ use App\Models\BloodType;
 use App\Models\Classroom;
 use App\Models\Gender;
 use App\Models\Grade;
+use App\Models\Image;
 use App\Models\My_Parent;
 use App\Models\Nationality;
 use App\Models\Section;
@@ -16,7 +17,11 @@ use Illuminate\Support\Facades\DB;
 
 class StudentRepository implements StudentRepositoryInterface
 {
-
+    public function Get_Student()
+    {
+         $students = Student::with('gender' , 'grade' , 'classroom' , 'section' )->get();
+        return view('pages.Students.index', compact('students'));
+    }
 public function create_Student(){
     $data['my_classes'] = Grade::all();
     $data['parents'] = My_Parent::all();
@@ -39,8 +44,11 @@ public function Get_classrooms($id){
     }
 
 
+
     public function Store_Student($request){
 
+
+        DB::beginTransaction();
 
         try {
             $students = new Student();
@@ -58,17 +66,77 @@ public function Get_classrooms($id){
             $students->academic_year = $request->academic_year;
             $students->save();
 
+            // insert img
+            if($request->hasfile('photos'))
+            {
+                foreach($request->file('photos') as $file)
+                {
+                    $name = $file->getClientOriginalName();
+                    $file->storeAs('attachments/students/'.$students->name, $file->getClientOriginalName(),'upload_attachments');
 
+                    // insert in image_table
+                    $images= new Image();
+                    $images->filename=$name;
+                    $images->imageable_id= $students->id;
+                    $images->imageable_type = 'App\Models\Student';
+                    $images->save();
+                }
+            }
+            DB::commit(); // insert data
             toastr()->success(trans('messages.success'));
             return redirect()->route('Students.create');
 
         }
 
         catch (\Exception $e){
-
+            DB::rollback();
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
 
+    }
+
+    public function Edit_Student($id)
+    {
+        $data['Grades'] = Grade::all();
+        $data['parents'] = My_Parent::all();
+        $data['Genders'] = Gender::all();
+        $data['nationals'] = Nationality::all();
+        $data['bloods'] = BloodType::all();
+        $Students =  Student::findOrFail($id);
+        return view('pages.Students.edit',$data,compact('Students'));
+    }
+
+    public function Update_Student($request)
+    {
+        try {
+            $Edit_Students = Student::findorfail($request->id);
+            $Edit_Students->name = ['ar' => $request->name_ar, 'en' => $request->name_en];
+            $Edit_Students->email = $request->email;
+            $Edit_Students->password = Hash::make($request->password);
+            $Edit_Students->gender_id = $request->gender_id;
+            $Edit_Students->nationality_id = $request->nationality_id;
+            $Edit_Students->blood_id = $request->blood_id;
+            $Edit_Students->Date_Birth = $request->Date_Birth;
+            $Edit_Students->Grade_id = $request->Grade_id;
+            $Edit_Students->Classroom_id = $request->Classroom_id;
+            $Edit_Students->section_id = $request->section_id;
+            $Edit_Students->parent_id = $request->parent_id;
+            $Edit_Students->academic_year = $request->academic_year;
+            $Edit_Students->save();
+
+            toastr()->success(trans('messages.Update'));
+            return redirect()->route('Students.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function Delete_Student($request)
+    {
+
+        Student::destroy($request->id);
+        toastr()->error(trans('messages.Delete'));
+        return redirect()->route('Students.index');
     }
 
 }

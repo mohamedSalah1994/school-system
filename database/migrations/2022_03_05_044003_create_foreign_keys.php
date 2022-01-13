@@ -23,10 +23,10 @@ class CreateForeignKeys extends Migration {
 						->onDelete('cascade');
 		});
         Schema::table('my_parents', function(Blueprint $table) {
-            $table->foreign('Nationality_Father_id')->references('id')->on('nationalities');
+            $table->foreign('Nationality_Father_id')->references('id')->on('nationalitys');
             $table->foreign('Blood_Type_Father_id')->references('id')->on('blood_types');
             $table->foreign('Religion_Father_id')->references('id')->on('religions');
-            $table->foreign('Nationality_Mother_id')->references('id')->on('nationalities');
+            $table->foreign('Nationality_Mother_id')->references('id')->on('nationalitys');
             $table->foreign('Blood_Type_Mother_id')->references('id')->on('blood_types');
             $table->foreign('Religion_Mother_id')->references('id')->on('religions');
         });

@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call(BloodTableSeeder::class);
-        $this->call(NationalitiesTableSeeder::class);
+        $this->call(nationalitysTableSeeder::class);
         $this->call(ReligionsTableSeeder::class);
         $this->call(GenderTableSeeder::class);
         $this->call(SpecializationTableSeesder::class);
