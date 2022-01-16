@@ -50,7 +50,7 @@ class MyParent extends Component
     public function render()
     {
         return view('livewire.my-parent', [
-            'nationalitys' => Nationality::all(),
+            'nationalities' => Nationality::all(),
             'Type_Bloods' => BloodType::all(),
             'Religions' => Religion::all(),
         ]);

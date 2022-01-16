@@ -69,7 +69,7 @@
                         <label for="inputCity">{{trans('Parent_trans.Nationality_Father_id')}}</label>
                         <select class="custom-select my-1 mr-sm-2" wire:model="Nationality_Mother_id">
                             <option selected>{{trans('Parent_trans.Choose')}}...</option>
-                            @foreach($nationalitys as $National)
+                            @foreach($nationalities as $National)
                                 <option value="{{$National->id}}">{{$National->Name}}</option>
                             @endforeach
                         </select>

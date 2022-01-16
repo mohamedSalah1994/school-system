@@ -6,7 +6,7 @@ use App\Models\Nationality;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class nationalitysTableSeeder extends Seeder
+class nationalitiesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class nationalitysTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('nationalitys')->delete();
+        DB::table('nationalities')->delete();
 
         $nationals = [
 
